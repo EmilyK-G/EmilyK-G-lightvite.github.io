@@ -6,6 +6,9 @@
     "start": "next start"
   },
   "dependencies": {
+    "@geoapify/geocoder-autocomplete": "^1.5.1",
+    "@geoapify/react-geocoder-autocomplete": "^1.4.0",
+    "@next/font": "^13.0.6",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"
