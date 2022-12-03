@@ -10,7 +10,13 @@
         background-color: #983711;
     }
     input {
-        @apply appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none
+        @apply appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none text-center
+    }
+}
+
+@layer components {
+    .form_div {
+        @apply flex items-center border-b border-whitesmoke border-opacity-50 py-2 my-5
     }
 }
 
@@ -20,7 +26,7 @@
 
 #event_address > div > input.geoapify-autocomplete-input {
     border: none;
-    padding: 10px;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
 }
 #event_address > div > div.geoapify-autocomplete-items > div.geoapify-autocomplete-item {
     color: #393939;
@@ -29,4 +35,5 @@
     fill: #f2f2f2;
     stroke: #f2f2f2;
 }
+
 

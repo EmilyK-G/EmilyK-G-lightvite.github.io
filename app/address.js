@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
 import '@geoapify/geocoder-autocomplete/styles/minimal.css'
  
-const Address = () => {
+const Address = ({setAddress}) => {
 
   const [displayValue, setDisplayValue] = useState('');
 
@@ -17,7 +17,7 @@ const Address = () => {
   }
  
   return <GeoapifyContext apiKey={process.env.autocompleteKey}>
-      <GeoapifyGeocoderAutocomplete placeholder="Enter address here"
+      <GeoapifyGeocoderAutocomplete placeholder="Event Address"
         type={'amenity'}
         lang={'en'}
         biasByLocation
