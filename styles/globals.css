@@ -20,6 +20,10 @@
     }
 }
 
+.autocomplete-container{
+    position: relative;
+}
+
 #event_address > div.geocoder-container {
     width: 100%;
 }

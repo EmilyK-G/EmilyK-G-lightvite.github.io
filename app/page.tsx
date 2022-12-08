@@ -1,7 +1,8 @@
 "use client"
 
 import React, {useState} from 'react';
-import Address from './address.js';
+import Address from './address.tsx';
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
 
 const Home = () => {
 
@@ -17,6 +18,10 @@ const Home = () => {
         e.preventDefault();
         console.log(name, event, date, time, address, rsvpPhone, availableSpots)
     }
+
+    function onAddressInput(e:any) {
+        setAddress(e.target.value)
+      }
 
   return (
     <div className='text-whitesmoke p-9'>
@@ -41,8 +46,8 @@ const Home = () => {
                 </div>
             </div>
 
-            <div id="event_address" className="form_div">
-                <Address setAddress={setAddress}/>
+            <div id="event_address" className="form_div" onInput={e=>onAddressInput(e)} >
+                <Address setAddress={setAddress} address={address}/>
             </div>
 
             <div id="rsvp_phone_div" className="form_div">
