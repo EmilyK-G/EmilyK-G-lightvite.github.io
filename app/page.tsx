@@ -1,7 +1,6 @@
 "use client"
 
-import React, {useState, useRef, useEffect} from 'react';
-import Address from './address.tsx';
+import React, {useState, useRef} from 'react';
 import MyModal from '../components/MyModal';
 
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
@@ -34,7 +33,7 @@ const Home = () => {
 
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
-        setAddress(inputRef.current?.lastChild?.firstChild?.value);
+        setAddress(inputRef.current?.firstElementChild?.firstElementChild?.value);
         setToBeCreated(true);
     }
 
@@ -48,18 +47,18 @@ const Home = () => {
             <>
             <p>Review your invite...</p>
             <ul>
-                {inviteDetails.map((det, i)=><li key={i}>{det}</li>)}
+                {inviteDetails.map((det, i)=><li key={i} className="m-5">{det}</li>)}
             </ul>
-            <button onClick={handleCreate}>Create</button>
+            <button className='myBtn m-10' onClick={handleCreate}>Create</button>
             </>
         </MyModal>}
         <form className="w-full max-w-sm">
             <div id="name_div" className="form_div">
-                <input type="text" onChange={(e)=>setName(e.target.value)} placeholder="Jane Doe"/>
+                <input type="text" onChange={(e)=>setName(e.target.value)} placeholder="Host"/>
             </div>
 
             <div id="event_div" className="form_div">
-                <input type="text" onChange={(e)=>setEvent(e.target.value)} placeholder="Aniversary"/>
+                <input type="text" onChange={(e)=>setEvent(e.target.value)} placeholder="Event Name"/>
             </div>
 
             <div className="flex">
@@ -76,7 +75,7 @@ const Home = () => {
 
             <div id="event_address" className="form_div" ref={inputRef}>
                 <GeoapifyContext apiKey={process.env.autocompleteKey}>
-                    <GeoapifyGeocoderAutocomplete placeholder="Event Address"
+                    <GeoapifyGeocoderAutocomplete placeholder="Address"
                         type={'amenity'}
                         limit={5}
                         />
@@ -84,10 +83,10 @@ const Home = () => {
             </div>
 
             <div id="rsvp_phone_div" className="form_div">
-                <input type="text" onChange={(e)=>setRsvpPhone(e.target.value)} placeholder="+12345678910"/>
+                <input type="text" onChange={(e)=>setRsvpPhone(e.target.value)} placeholder="RSVP #"/>
             </div>
             <div id="available_spots_div" className="form_div">
-                <input type="text" onChange={(e)=>setAvailableSpots(e.target.value)} placeholder="20"/>
+                <input type="text" onChange={(e)=>setAvailableSpots(e.target.value)} placeholder="Max. guests"/>
             </div>
             <div id="create_btn_div" className="p-10 m-10 flex items-center justify-center">
                 <button 

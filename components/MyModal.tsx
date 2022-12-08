@@ -44,7 +44,7 @@ const MyModal = ({onClose, children}:ChildProps) => {
         <div 
             className="w-10/12 flex flex-col">
             <button
-                className='text-whitesmoke text-5xl place-self-end'
+                className='text-whitesmoke text-xl place-self-end'
                 onClick={handleClose}>
                 X
             </button>

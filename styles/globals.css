@@ -39,5 +39,19 @@
     fill: #f2f2f2;
     stroke: #f2f2f2;
 }
-
+.myBtn {
+    display:inline-block;
+    padding:0.35rem 1.2rem;
+    border:0.1em solid #FFFFFF;
+    border-radius:5px;
+    box-sizing: border-box;
+    text-decoration:none;
+    color:#FFFFFF;
+    text-align:center;
+    transition: all 0.2s;
+}
+.myBtn:hover{
+    color:#000000;
+    background-color:#FFFFFF;
+}
 
