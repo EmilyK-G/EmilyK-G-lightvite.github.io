@@ -12,15 +12,15 @@ const Address = ({setAddress, address}:ChildProps) => {
 
   const onSelect = (value: string) => {
     setAddress(value);
-    console.log(value, address);
+    console.log(value, address, 'we are here');
   }
  
   return <GeoapifyContext apiKey={process.env.autocompleteKey}>
         <GeoapifyGeocoderAutocomplete placeholder="Event Address"
-            type={'amenity'}
+            // type={'amenity'}
             placeSelect={onSelect}
             // biasByLocation
-            limit={5}
+            // limit={5}
             />
     </GeoapifyContext>
     

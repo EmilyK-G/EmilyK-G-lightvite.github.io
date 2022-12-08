@@ -1,8 +1,9 @@
 "use client"
 
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Address from './address.tsx';
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
+import MyModal from './MyModal';
 
 const Home = () => {
 
@@ -14,17 +15,40 @@ const Home = () => {
     const [rsvpPhone, setRsvpPhone] = useState<string | null>(null);
     const [availableSpots, setAvailableSpots] = useState<string | null>(null);
 
-    const handleCreate = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
+    const [toBeCreated, setToBeCreated] = useState<boolean | null>(null);
+
+    const inputRef: React.MutableRefObject<HTMLDivElement | HTMLInputElement
+    | null> = useRef(null);
+
+    const inviteDetails = [
+        name, 
+        event, 
+        date, 
+        time, 
+        address, 
+        rsvpPhone, 
+        availableSpots
+    ]
+
+    const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
-        console.log(name, event, date, time, address, rsvpPhone, availableSpots)
+        setAddress(inputRef.current?.lastChild?.firstChild?.value);
+        setToBeCreated(true);
     }
 
-    function onAddressInput(e:any) {
-        setAddress(e.target.value)
-      }
+    const handleCreate = () => {
+        console.log(inviteDetails);
+    }
 
   return (
     <div className='text-whitesmoke p-9'>
+        {toBeCreated && <MyModal onClose={()=>setToBeCreated(null)}>
+            <p>Review your invite...</p>
+            <ul>
+                {inviteDetails.map((det, i)=><li key={i}>{det}</li>)}
+            </ul>
+            <button onClick={handleCreate}>Create</button>
+        </MyModal>}
         <form className="w-full max-w-sm">
             <div id="name_div" className="form_div">
                 <input type="text" onChange={(e)=>setName(e.target.value)} placeholder="Jane Doe"/>
@@ -46,7 +70,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <div id="event_address" className="form_div" onInput={e=>onAddressInput(e)} >
+            <div id="event_address" className="form_div" ref={inputRef}>
                 <Address setAddress={setAddress} address={address}/>
             </div>
 
@@ -60,7 +84,7 @@ const Home = () => {
                 <button 
                     className="flex-shrink-0 border-transparent border-4 hover:opacity-75 text-sm py-1 px-2 rounded text-center" 
                     type="button"
-                    onClick={handleCreate}>
+                    onClick={handleButtonClick}>
                         Create
                 </button>
             </div>
