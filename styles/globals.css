@@ -10,7 +10,7 @@
         background-color: #983711;
     }
     input {
-        @apply appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none text-center
+        @apply appearance-none bg-transparent border-none w-full py-1 px-2 leading-tight focus:outline-none text-center
     }
 }
 

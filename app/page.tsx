@@ -17,6 +17,8 @@ const Home = () => {
     const [availableSpots, setAvailableSpots] = useState<string | null>(null);
 
     const [toBeCreated, setToBeCreated] = useState<boolean | null>(null);
+    const [question, setQuestion] = useState<boolean | null>(null);
+    const [answer, setAnswer] = useState<string | null>(null);
 
     const inputRef: React.MutableRefObject<HTMLDivElement | HTMLInputElement
     | null> = useRef(null);
@@ -31,8 +33,22 @@ const Home = () => {
         availableSpots
     ]
 
+    const answers = {
+        host:'Insert the name of the person who is hosting the event. It could be you, the owner of the RSVP #, or someone else whose name will appear as host of the event on the invite.',
+        event_name:'Example: If you insert "Graduation Party" it will say "You are invited to my Graduation Party"; If you select "our" and insert "Aniversary" it will say "You are invited to our Aniversary". Uppercase is on you...',
+        rsvp_phone:'Insert the phone number of the person in charge of the RSVP, he/she will receive all the confirmation messages',
+        spots_available:'Insert the maximum number of guests you are inviting to this event'
+    }
+
+    const handleQuestionClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, ans: string)=>{
+        e.preventDefault(); 
+        setAnswer(ans); 
+        setQuestion(true)
+    }
+
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
+        //@ts-ignore
         setAddress(inputRef.current?.firstElementChild?.firstElementChild?.value);
         setToBeCreated(true);
     }
@@ -52,24 +68,35 @@ const Home = () => {
             <button className='myBtn m-10' onClick={handleCreate}>Create</button>
             </>
         </MyModal>}
+
+        { question && <MyModal onClose={()=>{setQuestion(null);setAnswer(null)}}>
+            <>
+                <div className='text-2xl'>
+                    <p>{answer && answer}</p>
+                </div>
+            </>
+        </MyModal>
+        }
         <form className="w-full max-w-sm">
             <div id="name_div" className="form_div">
                 <input type="text" onChange={(e)=>setName(e.target.value)} placeholder="Host"/>
+                <button onClick={(e)=>handleQuestionClick(e, answers.host)}>?</button>
             </div>
 
             <div id="event_div" className="form_div">
                 <input type="text" onChange={(e)=>setEvent(e.target.value)} placeholder="Event Name"/>
+                <button onClick={(e)=>handleQuestionClick(e, answers.event_name)}>?</button>
             </div>
 
-            <div className="flex">
+            <div className="grid grid-cols-2 text-md container">
                 {/* Date */}
                 <div id="date_div" className="form_div mr-1">
-                    <input type="text" onChange={(e)=>setDate(e.target.value)} placeholder="Date"/>
+                    <input type="date" onChange={(e)=>setDate(e.target.value)} placeholder="Date"/>
                 </div>
 
                 {/* Time */}
                 <div id="time_div" className="form_div ml-1">
-                    <input type="text" onChange={(e)=>setTime(e.target.value)} placeholder="Time"/>
+                    <input type="time" onChange={(e)=>setTime(e.target.value)} placeholder="Time"/>
                 </div>
             </div>
 
@@ -84,9 +111,11 @@ const Home = () => {
 
             <div id="rsvp_phone_div" className="form_div">
                 <input type="text" onChange={(e)=>setRsvpPhone(e.target.value)} placeholder="RSVP #"/>
+                <button onClick={(e)=>handleQuestionClick(e, answers.rsvp_phone)}>?</button>
             </div>
             <div id="available_spots_div" className="form_div">
                 <input type="text" onChange={(e)=>setAvailableSpots(e.target.value)} placeholder="Max. guests"/>
+                <button onClick={(e)=>handleQuestionClick(e, answers.spots_available)}>?</button>
             </div>
             <div id="create_btn_div" className="p-10 m-10 flex items-center justify-center">
                 <button 
