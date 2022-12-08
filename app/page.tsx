@@ -2,8 +2,10 @@
 
 import React, {useState, useRef, useEffect} from 'react';
 import Address from './address.tsx';
-import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete'
-import MyModal from './MyModal';
+import MyModal from '../components/MyModal';
+
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
+import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 
 const Home = () => {
 
@@ -43,11 +45,13 @@ const Home = () => {
   return (
     <div className='text-whitesmoke p-9'>
         {toBeCreated && <MyModal onClose={()=>setToBeCreated(null)}>
+            <>
             <p>Review your invite...</p>
             <ul>
                 {inviteDetails.map((det, i)=><li key={i}>{det}</li>)}
             </ul>
             <button onClick={handleCreate}>Create</button>
+            </>
         </MyModal>}
         <form className="w-full max-w-sm">
             <div id="name_div" className="form_div">
@@ -71,7 +75,12 @@ const Home = () => {
             </div>
 
             <div id="event_address" className="form_div" ref={inputRef}>
-                <Address setAddress={setAddress} address={address}/>
+                <GeoapifyContext apiKey={process.env.autocompleteKey}>
+                    <GeoapifyGeocoderAutocomplete placeholder="Event Address"
+                        type={'amenity'}
+                        limit={5}
+                        />
+                </GeoapifyContext>
             </div>
 
             <div id="rsvp_phone_div" className="form_div">
