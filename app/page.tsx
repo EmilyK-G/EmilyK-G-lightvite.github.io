@@ -150,7 +150,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <div id="create_btn_div" className="p-10 m-1 flex items-center justify-center">
+            <div id="create_btn_div" className="m-10 flex items-center justify-center">
                 <button 
                     className="flex-shrink-0 myBtn text-center opacity-90" 
                     type="button"
