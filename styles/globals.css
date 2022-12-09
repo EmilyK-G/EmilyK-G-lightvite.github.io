@@ -12,6 +12,16 @@
     input {
         @apply appearance-none bg-transparent border-none w-full py-1 px-2 leading-tight focus:outline-none text-center
     }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        background-image: url(../public/lightvite_calendar.png);
+        filter: invert(100%) sepia(58%) saturate(190%) hue-rotate(158deg) brightness(117%) contrast(90%);
+        opacity: 75%;
+      }
+      input[type="time"]::-webkit-calendar-picker-indicator {
+        background-image: url(../public/lightvite_clock.png);
+        filter: invert(100%) sepia(58%) saturate(190%) hue-rotate(158deg) brightness(117%) contrast(90%);
+        opacity: 75%;
+      }
 }
 
 @layer components {
