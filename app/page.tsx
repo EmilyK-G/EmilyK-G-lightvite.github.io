@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
 import '@geoapify/geocoder-autocomplete/styles/minimal.css';
+import SocketIo from './SocketIo';
 
 const Home = () => {
 
@@ -83,6 +84,7 @@ const Home = () => {
             </>
         </MyModal>
         }
+        <SocketIo/>
         <form className="w-full max-w-sm">
             <div id="name_div" className="form_div">
                 <input type="text" onChange={(e)=>setName(e.target.value)} placeholder="Host"/>
