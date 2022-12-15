@@ -1,9 +1,25 @@
-import React from 'react'
+import React from 'react';
 
-const Invite = () => {
+type PageProps = {
+  params: {
+    inviteId: string
+  }
+}
+
+const fetchInvite = async (inviteId:string) => {
+  console.log(inviteId)
+}
+
+async function InvitePage({params: {inviteId}}: PageProps) {
+
+  const invite = await fetchInvite(inviteId)
+
   return (
-    <div>{`This will be your invite:))`}</div>
+    <div>
+      <p>{`This will be your invite:))`}</p>
+      <p>{`Currently, this is your socket.io room number: ` + inviteId}</p>
+    </div>
   )
 }
 
-export default Invite
+export default InvitePage
