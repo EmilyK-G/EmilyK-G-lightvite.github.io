@@ -18,6 +18,10 @@ const Home = () => {
     const [address, setAddress] = useState<string | null>(null);
     const [rsvpPhone, setRsvpPhone] = useState<string | null>(null);
     const [availableSpots, setAvailableSpots] = useState<string | null>(null);
+    // getting states from down the tree...
+    const [socketIndex, setSocketIndex] = useState<string | null>(null);
+    const [photo, setPhoto] = useState<string | null>(null);
+    const [details, setDetails] = useState<string | null>(null);
 
     const [toBeCreated, setToBeCreated] = useState<boolean | null>(null);
     const [question, setQuestion] = useState<boolean | null>(null);
@@ -26,7 +30,7 @@ const Home = () => {
     const inputRef: React.MutableRefObject<HTMLDivElement | HTMLInputElement
     | null> = useRef(null);
 
-    const inviteDetails = [
+    const inviteDetails = {
         name, 
         prefix,
         event, 
@@ -34,12 +38,15 @@ const Home = () => {
         time, 
         address, 
         rsvpPhone, 
-        availableSpots
-    ]
+        availableSpots,
+        details,
+        photo,
+        socketIndex
+    }
 
     const answers = {
         host:'Insert the name of the person who is hosting the event. It could be you, the owner of the RSVP #, or someone else whose name will appear as host of the event on the invite.',
-        event_name:`Example: If you insert "Andrea's Graduation Party" it will say "You are invited to Andrea's Graduation Party"; If you select "our" and insert "Aniversary" it will say "You are invited to our Aniversary". Uppercase is on you...`,
+        event_name:`Write the event this invite is for. Examples: "Andrea's Graduation Party"; "my Pajama Party"; "our Aniversary". Uppercase is on you...`,
         rsvp_phone:'Insert the phone number of the person in charge of the RSVP, he/she will receive all the confirmation messages',
         spots_available:'Insert the maximum number of guests you are inviting to this event',
         choose_theme:'Choose your invitation theme or colors',
@@ -70,7 +77,17 @@ const Home = () => {
             <>
             <p>Review your invite...</p>
             <ul>
-                {inviteDetails.map((det, i)=><li key={i} className="m-5">{det}</li>)}
+                <li className="m-5"><span>You are invited to </span>{inviteDetails.prefix} {inviteDetails.event}</li>
+                <li className="m-5">Hosted by: {inviteDetails.name}</li>
+                <li className="m-5">Event Date: {inviteDetails.date}</li>
+                <li className="m-5">Event time: {inviteDetails.time}</li>
+                <li className="m-5">Event Location: {inviteDetails.address}</li>
+                <li className="m-5">RSVP to: {inviteDetails.rsvpPhone}</li>
+                <li className="m-5">Spots available: {inviteDetails.availableSpots}</li>
+                {details && <li className="m-5">Details: {inviteDetails.details}</li>}
+                {photo && <li className="m-5">Picture: {inviteDetails.photo}</li>}
+                {/* For testing purposes ONLY */}
+                {socketIndex && <li className="m-5">Socket room: {inviteDetails.socketIndex}</li>}
             </ul>
             <button className='myBtn m-10' onClick={handleCreate}>Create</button>
             </>
@@ -92,11 +109,13 @@ const Home = () => {
             </div>
 
             <div id="event_div" className="form_div">
-                <select className=' bg-transparent border-none text-xl' onChange={(e)=>setPrefix(e.target.value)}>
+                {/* <select 
+                    className=' bg-transparent border-none text-xl' 
+                    onChange={(e)=>setPrefix(e.target.value)}>
                     <option className=' text-midnight' value="">...</option>
                     <option className=' text-midnight' value="our">our</option>
                     <option className=' text-midnight' value="my">my</option>
-                </select>
+                </select> */}
                 <input type="text" className='flex-1' onChange={(e)=>setEvent(e.target.value)} placeholder="Event Name"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.event_name)}>?</button>
             </div>
