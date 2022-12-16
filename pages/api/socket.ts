@@ -9,11 +9,11 @@ const SocketHandler = (req:any, res:any) => {
     res.socket.server.io = io
 
     io.on('connection', socket => {
-        socket.on('input_change', (msg, room) => {
+        socket.on('send_message', (msg, room) => {
             if (room === ''){
-                socket.broadcast.emit('receive_input', msg)
+                socket.broadcast.emit('receive_message', msg)
             } else {
-                socket.to(room).emit('receive_input', msg)
+                socket.to(room).emit('receive_message', msg)
             }
         })
         socket.on('join_room', room => {

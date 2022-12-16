@@ -6,10 +6,10 @@ interface ServerToClientEvents {
     noArg: () => void;
     basicEmit: (a: number, b: string, c: Buffer) => void;
     withAck: (d: string, callback: (e: number) => void) => void;
-    receive_input: (a: any) => void; 
+    receive_message: (a: any) => void; 
 }
 interface ClientToServerEvents {
-    input_change: (a: any, b: any) => void;
+    send_message: (a: any, b: any) => void;
     connect: () => void;
     join_room: (a: any) => void;
 }
@@ -28,7 +28,7 @@ const SocketIo = () => {
             await fetch('/api/socket');
             setConected(true);
 
-            socket.on('receive_input', msg => {
+            socket.on('receive_message', msg => {
                 setMessage(msg)
                 console.log('you received a message:',msg)
             })
@@ -43,7 +43,7 @@ const SocketIo = () => {
     }
 
     const onSendMessageHandler = () => {
-        socket.emit('input_change', input, room);
+        socket.emit('send_message', input, room);
         console.log('you sent a message : ', input)
     }
 
@@ -53,7 +53,7 @@ const SocketIo = () => {
     <>
         {conected 
         && <p>You are conected!</p>}
-        <div className='flex'>
+        <div className='flex my-5'>
             <input
                 placeholder="Type something"
                 
@@ -66,7 +66,7 @@ const SocketIo = () => {
             <p>{message}</p>
             <Link href={`/${socket.id}`}>This message route</Link>
             </>}
-        <div className='flex'>
+        <div className='flex my-5'>
             <input type="text" 
                     placeholder="Type something"
                     onChange={(e)=>{setRoom(e.target.value)}} />
