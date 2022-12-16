@@ -10,5 +10,5 @@ module.exports = {
   env: {
     autocompleteKey: 'fb7d0854a46444f49fa7e9093c311ce2',
   },
-  externals: ()=>{if(isServer) { config.externals = [nodeExternals()] }},
+  // externals: ()=>{if(isServer) { config.externals = [nodeExternals()] }},
 }

@@ -9,7 +9,7 @@ interface ServerToClientEvents {
     receive_input: (a: any) => void; 
 }
 interface ClientToServerEvents {
-    input_change: (a: any) => void;
+    input_change: (a: any, b: any) => void;
     connect: () => void;
     join_room: (a: any) => void;
 }
