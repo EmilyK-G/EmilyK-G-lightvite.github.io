@@ -34,9 +34,9 @@ const ImageUploadForm = ({serverProps}:Props) => {
   
   return (
     <div className='p-9 flex flex-col text-xl'>
-      <div>
-        <Link className='text-whitesmoke decoration-1 border-b-whitesmoke border-b-2 opacity-75 border-opacity-50 mb-5' href={'/'}>Back</Link>
-      </div>
+      
+      <Link className='text-whitesmoke decoration-1 border-b-whitesmoke border-b-2 opacity-75 border-opacity-50 mb-5' href={'/'}>Back</Link>
+      
       <label>
         <input 
           type="file" 

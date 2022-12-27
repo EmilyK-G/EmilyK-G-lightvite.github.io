@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
 import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 import SocketIo from './SocketIo';
+import Details from './DetailsPage';
+import PhotoPage from './addphoto/page';
 
 const Home = () => {
 
@@ -21,7 +23,11 @@ const Home = () => {
     // getting states from down the tree...
     const [socketIndex, setSocketIndex] = useState<string | null>(null);
     const [photo, setPhoto] = useState<string | null>(null);
+    const [photoClick, setPhotoClick] = useState<boolean | null>(null);
     const [details, setDetails] = useState<string | null>(null);
+    const [detailsClick, setDetailsClick] = useState<boolean | null>(null);
+    const [myTheme, setMyTheme] = useState<string | null>(null);
+    const [myThemeClick, setMyThemeClick] = useState<boolean | null>(null);
 
     const [toBeCreated, setToBeCreated] = useState<boolean | null>(null);
     const [question, setQuestion] = useState<boolean | null>(null);
@@ -41,9 +47,11 @@ const Home = () => {
         availableSpots,
         details,
         photo,
-        socketIndex
+        socketIndex,
+        myTheme
     }
 
+    // for the event name, I deleted the pefix selection part because the plan is to separate it with a gramarly-like code, nothing crazy, less mental work for the user.
     const answers = {
         host:'Insert the name of the person who is hosting the event. It could be you, the owner of the RSVP #, or someone else whose name will appear as host of the event on the invite.',
         event_name:`Write the event this invite is for. Examples: "Andrea's Graduation Party"; "my Pajama Party"; "our Aniversary". Uppercase is on you...`,
@@ -86,6 +94,7 @@ const Home = () => {
                 <li className="m-5">Spots available: {inviteDetails.availableSpots}</li>
                 {details && <li className="m-5">Details: {inviteDetails.details}</li>}
                 {photo && <li className="m-5">Picture: {inviteDetails.photo}</li>}
+                {myTheme && <li className="m-5">Style: {inviteDetails.myTheme}</li>}
                 {/* For testing purposes ONLY */}
                 {socketIndex && <li className="m-5">Socket room: {inviteDetails.socketIndex}</li>}
             </ul>
@@ -151,23 +160,26 @@ const Home = () => {
             </div>
 
             <div className='flex flex-col justify-center items-center font-mono pt-5'>
+                <div className='flex flex-col opacity-50  pt-1'>
+                    <section className='flex justify-center'>
+                        <button className='flex-1 border-b border-whitesmoke border-opacity-50 text-md self-center' onClick={(e)=>{e.preventDefault();setDetailsClick(!detailsClick)}}>
+                            Add Details
+                        </button>
+                        <button className='ml-1 text-sm text-center' onClick={(e)=>handleQuestionClick(e, answers.add_details)}>?</button>
+                    </section>
+                    {detailsClick && <Details setDetails={setDetails}/>}
+                </div>
                 <div className='flex opacity-50  pt-1'>       
-                    <Link className='flex-1 border-b border-whitesmoke border-opacity-50 text-md self-center' href={`/theme`}>
+                    <Link className='flex-1 border-b border-whitesmoke border-opacity-50 text-md self-center' href={`/choosetheme`}>
                         Choose Theme
                     </Link>
-                    <button className='ml-1 text-sm text-center' onClick={(e)=>handleQuestionClick(e, answers.choose_theme)}>?</button>
+                    <button className='ml-1 text-sm text-center' onClick={(e)=>{handleQuestionClick(e, answers.choose_theme); setMyThemeClick(!myThemeClick)}}>?</button>
                 </div>
-                <div className='flex opacity-50  pt-1'>
-                    <Link className='flex-1 border-b border-whitesmoke border-opacity-50 text-md self-center' href={`/details`}>
-                        Add Details
-                    </Link>
-                    <button className='ml-1 text-sm text-center' onClick={(e)=>handleQuestionClick(e, answers.add_details)}>?</button>
-                </div>
-                <div className='flex opacity-50  pt-1'>
-                    <Link className='flex-1 border-b border-whitesmoke border-opacity-50 text-md self-center' href={`/photo`}>
+                <div className='flex opacity-50 pt-1'>
+                    <Link className='flex-1 border-b border-whitesmoke border-opacity-50 text-md self-center' href={`/addphoto`}>
                         Add Photo
                     </Link>
-                    <button className='ml-1 text-sm text-center' onClick={(e)=>handleQuestionClick(e, answers.add_photo)}>?</button>
+                    <button className='ml-1 text-sm text-center' onClick={(e)=>{handleQuestionClick(e, answers.add_photo); setPhotoClick(!photoClick)}}>?</button>
                 </div>
             </div>
 
