@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import { Dancing_Script } from '@next/font/google';
+import InviteProvider from './contexts/inviteContext';
 
 const dancingScript = Dancing_Script({
   subsets: ['latin'],
@@ -14,7 +15,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dancingScript.variable} font-sans`}>
       <head />
-      <body>{children}</body>
+      <body>
+        <InviteProvider>
+          {children}
+        </InviteProvider>
+      </body>
     </html>
   )
 }

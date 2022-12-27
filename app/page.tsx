@@ -8,25 +8,11 @@ import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-g
 import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 import SocketIo from './SocketIo';
 import Details from './DetailsPage';
-import PhotoPage from './addphoto/page';
+import { useInviteContext } from './hooks/useInviteContext';
 
 const Home = () => {
-
-    const [name, setName] = useState<string | null>(null);
-    const [prefix, setPrefix] = useState<string>("");
-    const [event, setEvent] = useState<string | null>(null);
-    const [date, setDate] = useState<string | null>(null);
-    const [time, setTime] = useState<string | null>(null);
-    const [address, setAddress] = useState<string | null>(null);
-    const [rsvpPhone, setRsvpPhone] = useState<string | null>(null);
-    const [availableSpots, setAvailableSpots] = useState<string | null>(null);
-    // getting states from down the tree...
-    const [socketIndex, setSocketIndex] = useState<string | null>(null);
-    const [photo, setPhoto] = useState<string | null>(null);
     const [photoClick, setPhotoClick] = useState<boolean | null>(null);
-    const [details, setDetails] = useState<string | null>(null);
     const [detailsClick, setDetailsClick] = useState<boolean | null>(null);
-    const [myTheme, setMyTheme] = useState<string | null>(null);
     const [myThemeClick, setMyThemeClick] = useState<boolean | null>(null);
 
     const [toBeCreated, setToBeCreated] = useState<boolean | null>(null);
@@ -36,20 +22,25 @@ const Home = () => {
     const inputRef: React.MutableRefObject<HTMLDivElement | HTMLInputElement
     | null> = useRef(null);
 
-    const inviteDetails = {
-        name, 
-        prefix,
-        event, 
-        date, 
-        time, 
-        address, 
-        rsvpPhone, 
-        availableSpots,
-        details,
-        photo,
+    const {
+        setName,
+        setPrefix,
+        setEvent,
+        setDate,
+        setTime,
+        setAddress,
+        setRsvpPhone,
+        setAvailableSpots,
+        setSocketIndex,
+        setPhoto,
+        setDetails,
+        setMyTheme, 
+        inviteDetails,
         socketIndex,
-        myTheme
-    }
+        myTheme,
+        photo,
+        details
+    } = useInviteContext()
 
     // for the event name, I deleted the pefix selection part because the plan is to separate it with a gramarly-like code, nothing crazy, less mental work for the user.
     const answers = {
