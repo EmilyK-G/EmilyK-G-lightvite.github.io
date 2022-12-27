@@ -36,8 +36,9 @@ const handler: NextApiHandler = async (req, res) => {
     } catch (error) {
         await fs.mkdir(path.join(process.cwd() + "/public", "/images"));
     }
-    await readFile(req, true);
-    res.json({done:"ok"});
+    const myPath = await readFile(req, true);
+    //@ts-ignore
+    res.json({done:"ok", filename: myPath.files.myImage.newFilename});
 }
 
 export default handler

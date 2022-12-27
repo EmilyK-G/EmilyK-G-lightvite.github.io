@@ -32,7 +32,6 @@ const Home = () => {
         setRsvpPhone,
         setAvailableSpots,
         setSocketIndex,
-        setPhoto,
         setDetails,
         setMyTheme, 
         inviteDetails,

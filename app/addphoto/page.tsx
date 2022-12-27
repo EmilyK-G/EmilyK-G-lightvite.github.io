@@ -22,7 +22,6 @@ const PhotoPage = async() => {
 
   await getServerProps();
 
-  console.log(serverProps)
   return <ImageUploadForm serverProps={serverProps}/>
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
+import {useInviteContext} from '../hooks/useInviteContext'
 
 interface Props {
   serverProps: string[]
@@ -13,6 +14,8 @@ const ImageUploadForm = ({serverProps}:Props) => {
   const [uploading, setUploading] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File>();
+
+  const {setPhoto, photo} = useInviteContext();
 
   const handleUpload = async() => {
     setUploading(true);
@@ -25,7 +28,10 @@ const ImageUploadForm = ({serverProps}:Props) => {
       const formData = new FormData();
       formData.append("myImage", selectedFile);
       const { data } = await axios.post("/api/image", formData);
-      console.log(data)
+      
+      setPhoto('/images/' + `${data.filename}`)
+      console.log(photo)
+      
     } catch(error: any) {
       console.log(error.response?.data);
     }
@@ -46,6 +52,7 @@ const ImageUploadForm = ({serverProps}:Props) => {
               const file = target.files[0];
               setSelectedImage(URL.createObjectURL(file));
               setSelectedFile(file);
+              console.log(file, selectedImage)
             }
           }}/>
         <div className='my-10 w-40 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer'>
@@ -62,13 +69,13 @@ const ImageUploadForm = ({serverProps}:Props) => {
         className='text-center rounded'>
         {uploading ? "Uploading..." : "Upload"}
       </button>
-      <div className='mt-20 flex flex-col space-y-3'>
+      {/* <div className='mt-20 flex flex-col space-y-3'>
         {serverProps && serverProps.map((item) => (
           <Link key={item} href={"/images/" + item}>
             {item}
           </Link>
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }
