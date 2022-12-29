@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useState, useRef} from 'react';
-import MyModal from '../components/MyModal';
+import MyModal from './MyModal';
 import Link from 'next/link';
 
 import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
@@ -70,7 +70,7 @@ const Home = () => {
     }
 
   return (
-    <div className='text-whitesmoke p-9'>
+    <div className='text-whitesmoke p-5'>
         {toBeCreated && <MyModal onClose={()=>setToBeCreated(null)}>
             <>
             <p>Review your invite...</p>
