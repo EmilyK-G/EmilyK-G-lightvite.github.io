@@ -20,7 +20,8 @@ interface InviteContextInterface {
     myTheme: string | null,
     photo: string | null,
     details: string | null,
-    date: string | null
+    date: string | null,
+    time: string | null
   }
 
 type Props = {
@@ -67,6 +68,7 @@ export default function InviteProvider({ children }: Props) {
         setEvent,
         setDate,
         setTime,
+        time,
         setAddress,
         setRsvpPhone,
         setAvailableSpots,

@@ -20,6 +20,7 @@ const Home = () => {
     const [answer, setAnswer] = useState<string | null>(null);
 
     const inputRef: LegacyRef<HTMLDivElement> | undefined = useRef(null);
+    const timeInputRef = useRef(null);
 
     const {
         setName,
@@ -27,6 +28,7 @@ const Home = () => {
         setEvent,
         setDate,
         setTime,
+        time,
         setAddress,
         setRsvpPhone,
         setAvailableSpots,
@@ -74,9 +76,32 @@ const Home = () => {
         return
     }
 
+    const handleTime = ()=>{
+        if(!time) return
+        var timeSplit = time.split(':'),
+            hours,
+            minutes,
+            meridian;
+        hours = Number(timeSplit[0]);
+        minutes = timeSplit[1];
+        if (hours > 12) {
+            meridian = 'PM';
+            hours -= 12;
+        } else if (hours < 12) {
+            meridian = 'AM';
+            if (hours == 0) {
+            hours = 12;
+            }
+        } else {
+            meridian = 'PM';
+        }
+        setTime(hours + ':' + minutes + ' ' + meridian);
+    }
+
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
         handleDate();
+        handleTime();
         //@ts-ignore
         setAddress(inputRef.current?.firstElementChild?.firstElementChild?.value);
         setToBeCreated(true);
@@ -84,7 +109,6 @@ const Home = () => {
 
     const handleCreate = () => {
         console.log(inviteDetails);
-        console.log(new Date(2022, 12, 29))
     }
 
   return (
@@ -138,7 +162,7 @@ const Home = () => {
 
                 {/* Time */}
                 <div id="time_div" className="form_div ml-1">
-                    <input type="time" onChange={(e)=>setTime(e.target.value)} placeholder="Time"/>
+                    <input type="time" ref={timeInputRef} onChange={(e)=>{setTime(e.target.value)}} pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" placeholder="Time"/>
                 </div>
             </div>
 
