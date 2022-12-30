@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, LegacyRef} from 'react';
 import MyModal from './MyModal';
 import Link from 'next/link';
 
@@ -19,8 +19,7 @@ const Home = () => {
     const [question, setQuestion] = useState<boolean | null>(null);
     const [answer, setAnswer] = useState<string | null>(null);
 
-    const inputRef: React.MutableRefObject<HTMLDivElement | HTMLInputElement
-    | null> = useRef(null);
+    const inputRef: LegacyRef<HTMLDivElement> | undefined = useRef(null);
 
     const {
         setName,
@@ -38,7 +37,8 @@ const Home = () => {
         socketIndex,
         myTheme,
         photo,
-        details
+        details,
+        date
     } = useInviteContext()
 
     // for the event name, I deleted the pefix selection part because the plan is to separate it with a gramarly-like code, nothing crazy, less mental work for the user.
@@ -58,8 +58,25 @@ const Home = () => {
         setQuestion(true)
     }
 
+    const handleDate = ()=>{
+        const array = date?.split("-");
+        if(array){
+          const formatedDate = new Date(Number(array[0]),Number(array[1]),Number(array[2]));
+          const result = formatedDate.toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+          console.log(result);
+          return setDate(result);
+        }
+        return
+    }
+
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
+        handleDate();
         //@ts-ignore
         setAddress(inputRef.current?.firstElementChild?.firstElementChild?.value);
         setToBeCreated(true);
@@ -67,6 +84,7 @@ const Home = () => {
 
     const handleCreate = () => {
         console.log(inviteDetails);
+        console.log(new Date(2022, 12, 29))
     }
 
   return (
@@ -108,13 +126,6 @@ const Home = () => {
             </div>
 
             <div id="event_div" className="form_div">
-                {/* <select 
-                    className=' bg-transparent border-none text-xl' 
-                    onChange={(e)=>setPrefix(e.target.value)}>
-                    <option className=' text-midnight' value="">...</option>
-                    <option className=' text-midnight' value="our">our</option>
-                    <option className=' text-midnight' value="my">my</option>
-                </select> */}
                 <input type="text" className='flex-1' onChange={(e)=>setEvent(e.target.value)} placeholder="Event Name"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.event_name)}>?</button>
             </div>
@@ -136,6 +147,7 @@ const Home = () => {
                     <GeoapifyGeocoderAutocomplete placeholder="Address"
                         type={'amenity'}
                         limit={5}
+
                         />
                 </GeoapifyContext>
             </div>

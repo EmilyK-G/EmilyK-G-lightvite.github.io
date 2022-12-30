@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, Dispatch, useState } from 'react';
+import { createContext, ReactNode, Dispatch, useState, useEffect } from 'react';
 
 interface InviteContextInterface {
     setName: Dispatch<React.SetStateAction<string | null>>,
@@ -19,7 +19,8 @@ interface InviteContextInterface {
     socketIndex: string | null,
     myTheme: string | null,
     photo: string | null,
-    details: string | null
+    details: string | null,
+    date: string | null
   }
 
 type Props = {
@@ -77,7 +78,8 @@ export default function InviteProvider({ children }: Props) {
         socketIndex,
         myTheme,
         photo,
-        details}}>
+        details,
+        date}}>
       {children}
     </InviteCtx.Provider>
   );
