@@ -19,7 +19,7 @@ const Home = () => {
     const [question, setQuestion] = useState<boolean | null>(null);
     const [answer, setAnswer] = useState<string | null>(null);
 
-    const inputRef: LegacyRef<HTMLDivElement> | undefined = useRef(null);
+    const addressRef: LegacyRef<HTMLDivElement> | undefined = useRef(null);
     const timeInputRef = useRef(null);
 
     const {
@@ -30,6 +30,7 @@ const Home = () => {
         setTime,
         time,
         setAddress,
+        address,
         setRsvpPhone,
         setAvailableSpots,
         setSocketIndex,
@@ -98,12 +99,21 @@ const Home = () => {
         setTime(hours + ':' + minutes + ' ' + meridian);
     }
 
+    const handleAddress = ()=> {
+        //@ts-ignore
+        const myAddress = addressRef.current?.firstElementChild?.firstElementChild?.value;
+        if(!myAddress) return
+
+        const splitted = myAddress.split(",");
+        splitted.pop();
+        setAddress(splitted.join());
+    }
+
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
         handleDate();
         handleTime();
-        //@ts-ignore
-        setAddress(inputRef.current?.firstElementChild?.firstElementChild?.value);
+        handleAddress();
         setToBeCreated(true);
     }
 
@@ -166,12 +176,11 @@ const Home = () => {
                 </div>
             </div>
 
-            <div id="event_address" className="form_div" ref={inputRef}>
+            <div id="event_address" className="form_div" ref={addressRef}>
                 <GeoapifyContext apiKey={process.env.autocompleteKey}>
                     <GeoapifyGeocoderAutocomplete placeholder="Address"
                         type={'amenity'}
                         limit={5}
-
                         />
                 </GeoapifyContext>
             </div>
