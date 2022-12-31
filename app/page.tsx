@@ -110,16 +110,19 @@ const Home = () => {
 
     const handleEventName = async() => {
         if(!event) return
+
+        setPrefix(null)
+
         const pronouns = ["my", "our", "your", "his", "her", "its", "their", "the"];
   
         const splitted = event.split(" ");
         splitted.forEach( wor => {
+            const lowerWor = wor.toLowerCase();
           pronouns.forEach((pro) => {
-            if (wor === pro) {
+            if (lowerWor === pro) {
                 if(prefix) return
-
                 setPrefix(wor)
-                const eventName = splitted.filter(w=>w!==pro).join(' ');
+                const eventName = splitted.filter(w=>w.toLowerCase()!==pro).join(' ');
                 setEvent(eventName)
                 return
             }
