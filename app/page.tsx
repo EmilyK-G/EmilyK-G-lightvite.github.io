@@ -9,6 +9,7 @@ import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 import SocketIo from './SocketIo';
 import Details from './DetailsPage';
 import { useInviteContext } from './hooks/useInviteContext';
+import { setDefaultResultOrder } from 'dns';
 
 const Home = () => {
     const [photoClick, setPhotoClick] = useState<boolean | null>(null);
@@ -18,6 +19,8 @@ const Home = () => {
     const [toBeCreated, setToBeCreated] = useState<boolean | null>(null);
     const [question, setQuestion] = useState<boolean | null>(null);
     const [answer, setAnswer] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [isValidNumber, setIsValidNumber] = useState <boolean|null>(null);
 
     const addressRef: LegacyRef<HTMLDivElement> | undefined = useRef(null);
     const timeInputRef = useRef(null);
@@ -32,6 +35,7 @@ const Home = () => {
         setTime,
         time,
         setAddress,
+        address,
         setRsvpPhone,
         setAvailableSpots,
         setDetails,
@@ -131,8 +135,20 @@ const Home = () => {
         return
     }
 
+    function validatePhoneNumber(num: string) {
+        var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+        
+        setIsValidNumber(re.test(num));
+    }
+
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
+        if (!isValidNumber) return setError('Add a valid phone number for RSVP');
+        if(!date) return setError('Choose a valid date');
+        if(!time) return setError('Choose a valid time');
+        if(!address) return setError('Choose a valid address');
+        if(!event) return setError('Name your event');
+
         handleDate();
         handleTime();
         handleAddress();
@@ -178,24 +194,24 @@ const Home = () => {
         <SocketIo/>
         <form className="w-full max-w-sm">
             <div id="name_div" className="form_div">
-                <input type="text" onChange={(e)=>setName(e.target.value)} placeholder="Host"/>
+                <input required type="text" onChange={(e)=>setName(e.target.value)} placeholder="Host"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.host)}>?</button>
             </div>
 
             <div id="event_div" className="form_div">
-                <input type="text" className='flex-1' onChange={(e)=>setEvent(e.target.value)} placeholder="Event Name"/>
+                <input required type="text" className='flex-1' onChange={(e)=>setEvent(e.target.value)} placeholder="Event Name"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.event_name)}>?</button>
             </div>
 
             <div className="grid grid-cols-2 text-md container">
                 {/* Date */}
                 <div id="date_div" className="form_div mr-1 appearance-none">
-                    <input type="date" onChange={(e)=>setDate(e.target.value)} placeholder="Date"/>
+                    <input required type="date" onChange={(e)=>setDate(e.target.value)} placeholder="Date"/>
                 </div>
 
                 {/* Time */}
                 <div id="time_div" className="form_div ml-1">
-                    <input type="time" ref={timeInputRef} onChange={(e)=>{setTime(e.target.value)}} pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" placeholder="Time"/>
+                    <input required type="time" ref={timeInputRef} onChange={(e)=>{setTime(e.target.value)}} pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" placeholder="Time"/>
                 </div>
             </div>
 
@@ -208,8 +224,8 @@ const Home = () => {
                 </GeoapifyContext>
             </div>
 
-            <div id="rsvp_phone_div" className="form_div">
-                <input type="text" minLength={10} maxLength={20} onChange={(e)=>setRsvpPhone(e.target.value)} placeholder="RSVP #"/>
+            <div id="rsvp_phone_div" className={`form_div` + (isValidNumber ? ' border-b-success' : ' border-b-error')}>
+                <input required type="text" min={10} onChange={(e)=>{setRsvpPhone(e.target.value); validatePhoneNumber(e.target.value)}} placeholder="RSVP #"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.rsvp_phone)}>?</button>
             </div>
             <div id="available_spots_div" className="form_div">
@@ -241,13 +257,14 @@ const Home = () => {
                 </div>
             </div>
 
-            <div id="create_btn_div" className="m-10 flex items-center justify-center">
+            <div id="create_btn_div" className="m-10 flex flex-col items-center justify-center">
                 <button 
                     className="flex-shrink-0 myBtn text-center opacity-90" 
                     type="button"
                     onClick={handleButtonClick}>
                         Create
                 </button>
+                {error && <p className='text-error font-mono text-sm mt-4 text-center'>{error}</p>}
             </div>
         </form>
     </div>
