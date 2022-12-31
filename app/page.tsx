@@ -32,12 +32,9 @@ const Home = () => {
         setTime,
         time,
         setAddress,
-        address,
         setRsvpPhone,
         setAvailableSpots,
-        setSocketIndex,
         setDetails,
-        setMyTheme, 
         inviteDetails,
         socketIndex,
         myTheme,
@@ -119,9 +116,12 @@ const Home = () => {
         splitted.forEach( wor => {
           pronouns.forEach((pro) => {
             if (wor === pro) {
+                if(prefix) return
+
                 setPrefix(wor)
                 const eventName = splitted.filter(w=>w!==pro).join(' ');
                 setEvent(eventName)
+                return
             }
           });
         });
