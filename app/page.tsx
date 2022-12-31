@@ -25,7 +25,9 @@ const Home = () => {
     const {
         setName,
         setPrefix,
+        prefix,
         setEvent,
+        event,
         setDate,
         setTime,
         time,
@@ -109,11 +111,26 @@ const Home = () => {
         setAddress(splitted.join());
     }
 
+    const handleEventName = () => {
+        if(!event) return
+        const pronouns = ["my", "our", "your", "his", "her", "its", "their", "the"];
+  
+        const splitted = event.split(" ");
+        splitted.forEach( wor => {
+          pronouns.forEach((pro) => {
+            if (wor === pro) setPrefix(wor)
+          });
+        });
+
+        return setEvent(splitted.filter(w=>w!==prefix).join(' '));
+    }
+
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
         handleDate();
         handleTime();
         handleAddress();
+        handleEventName();
         setToBeCreated(true);
     }
 

@@ -5,7 +5,9 @@ import { createContext, ReactNode, Dispatch, useState, useEffect } from 'react';
 interface InviteContextInterface {
     setName: Dispatch<React.SetStateAction<string | null>>,
     setPrefix: Dispatch<React.SetStateAction<string | null>>,
+    prefix: string | null,
     setEvent: Dispatch<React.SetStateAction<string | null>>,
+    event: string | null,
     setDate: Dispatch<React.SetStateAction<string | null>>,
     setTime: Dispatch<React.SetStateAction<string | null>>,
     setAddress: Dispatch<React.SetStateAction<string | null>>,
@@ -66,7 +68,9 @@ export default function InviteProvider({ children }: Props) {
     <InviteCtx.Provider value={{
         setName,
         setPrefix,
+        prefix,
         setEvent,
+        event,
         setDate,
         setTime,
         time,
