@@ -111,18 +111,21 @@ const Home = () => {
         setAddress(splitted.join());
     }
 
-    const handleEventName = () => {
+    const handleEventName = async() => {
         if(!event) return
         const pronouns = ["my", "our", "your", "his", "her", "its", "their", "the"];
   
         const splitted = event.split(" ");
         splitted.forEach( wor => {
           pronouns.forEach((pro) => {
-            if (wor === pro) setPrefix(wor)
+            if (wor === pro) {
+                setPrefix(wor)
+                const eventName = splitted.filter(w=>w!==pro).join(' ');
+                setEvent(eventName)
+            }
           });
         });
-
-        return setEvent(splitted.filter(w=>w!==prefix).join(' '));
+        return
     }
 
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
