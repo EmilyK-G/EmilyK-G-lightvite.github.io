@@ -25,7 +25,7 @@ const Theme = async() => {
   await getServerProps();
 
   return (
-    <div className='flex flex-col text-xl'>
+    <div className='flex flex-col text-xl p-5'>
         <Link className='text-whitesmoke decoration-1 border-b-whitesmoke border-b-2 opacity-75 border-opacity-50 my-5 pl-5' href={'/'}>Back</Link>
       
         {serverProps && serverProps.map((item) => (

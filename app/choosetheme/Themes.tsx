@@ -28,13 +28,13 @@ const Themes = ({item}:Props) => {
         <div 
         key={item} 
         onClick={handleThemeClick}
-        className="flex items-center justify-center h-14 relative z-20 w-full">
+        className="flex items-center justify-center h-16 w-full relative z-20">
             <Image 
                 src={`/images/`+ item} 
                 alt='image'
                 fill={true}
                 className='object-cover z-10 opacity-50 absolute'/>
-                <div className="flex items-end justify-end self-end h-7 w-full bg-whitesmoke bg-opacity-20 relative z-10 hover:bg-opacity-0 ">
+                <div className="flex items-end justify-end self-end h-7 w-full bg-whitesmoke bg-opacity-5 relative z-10 hover:bg-opacity-0 ">
                     <p className='z-20'>{item}</p>
                 </div>
         </div>

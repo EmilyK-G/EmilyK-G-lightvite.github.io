@@ -4,6 +4,7 @@ import { createContext, ReactNode, Dispatch, useState, useEffect } from 'react';
 
 interface InviteContextInterface {
     setName: Dispatch<React.SetStateAction<string | null>>,
+    name: string | null,
     setPrefix: Dispatch<React.SetStateAction<string | null>>,
     prefix: string | null,
     setEvent: Dispatch<React.SetStateAction<string | null>>,
@@ -13,7 +14,9 @@ interface InviteContextInterface {
     setAddress: Dispatch<React.SetStateAction<string | null>>,
     address: string | null,
     setRsvpPhone: Dispatch<React.SetStateAction<string | null>>,
+    rsvpPhone: string|null,
     setAvailableSpots: Dispatch<React.SetStateAction<string | null>>,
+    availableSpots: string|null,
     setSocketIndex: Dispatch<React.SetStateAction<string | null>>,
     setPhoto: Dispatch<React.SetStateAction<string | null>>,
     setDetails: Dispatch<React.SetStateAction<string | null>>,
@@ -63,10 +66,23 @@ export default function InviteProvider({ children }: Props) {
         socketIndex,
         myTheme
     }
+
+    useEffect(()=>{
+      const mySavedName = sessionStorage.getItem("savedName");
+      if(!mySavedName && name){
+          sessionStorage.setItem("mySavedName", name);
+          console.log('NAME SAVED')
+      }
+      if(mySavedName){
+        setName(JSON.parse(mySavedName))
+        console.log(mySavedName)
+      }
+    }, [name])
     
   return (
     <InviteCtx.Provider value={{
         setName,
+        name,
         setPrefix,
         prefix,
         setEvent,
@@ -77,7 +93,9 @@ export default function InviteProvider({ children }: Props) {
         setAddress,
         address,
         setRsvpPhone,
+        rsvpPhone,
         setAvailableSpots,
+        availableSpots,
         setSocketIndex,
         setPhoto,
         setDetails,

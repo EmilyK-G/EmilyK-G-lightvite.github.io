@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState, useRef, LegacyRef} from 'react';
+import React, {useState, useRef, LegacyRef, useEffect} from 'react';
 import MyModal from './MyModal';
 import Link from 'next/link';
 
@@ -9,7 +9,6 @@ import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 import SocketIo from './SocketIo';
 import Details from './DetailsPage';
 import { useInviteContext } from './hooks/useInviteContext';
-import { setDefaultResultOrder } from 'dns';
 
 const Home = () => {
     const [photoClick, setPhotoClick] = useState<boolean | null>(null);
@@ -27,6 +26,7 @@ const Home = () => {
 
     const {
         setName,
+        name,
         setPrefix,
         prefix,
         setEvent,
@@ -37,15 +37,43 @@ const Home = () => {
         setAddress,
         address,
         setRsvpPhone,
+        rsvpPhone,
         setAvailableSpots,
+        availableSpots,
         setDetails,
         inviteDetails,
         socketIndex,
+        setMyTheme,
         myTheme,
+        setPhoto,
         photo,
         details,
         date
     } = useInviteContext()
+
+    // useEffect(()=>{
+    //     const myDetails = sessionStorage.getItem("myInviteDetails");
+    //     if(!myDetails){
+    //         sessionStorage.setItem("myInviteDetails", inviteDetails);
+    //         console.log('SAVED')
+    //     }
+    //     const handleDetails = async()=>{
+    //         if (myDetails){
+    //             // setName(myDetails.name);
+    //             // setPrefix(myDetails.prefix);
+    //             // setEvent(myDetails.event);
+    //             // setDate(myDetails.date);
+    //             // setTime(myDetails.time);
+    //             // setAddress(myDetails.address);
+    //             // setRsvpPhone(myDetails.rsvpPhone);
+    //             // setAvailableSpots(myDetails.availableSpots);
+    //             // setDetails(myDetails.details);
+    //             // setPhoto(myDetails.photo);
+    //             // setMyTheme(myDetails.myTheme);
+    //         }
+    //     }
+    //     if (name||prefix||event||date||time||address) handleDetails()
+    // }, [])
 
     // for the event name, I deleted the pefix selection part because the plan is to separate it with a gramarly-like code, nothing crazy, less mental work for the user.
     const answers = {
@@ -143,17 +171,17 @@ const Home = () => {
 
     const handleButtonClick = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
         e.preventDefault();
-        if (!isValidNumber) return setError('Add a valid phone number for RSVP');
-        if(!date) return setError('Choose a valid date');
-        if(!time) return setError('Choose a valid time');
-        if(!address) return setError('Choose a valid address');
-        if(!event) return setError('Name your event');
-
         handleDate();
         handleTime();
         handleAddress();
         handleEventName();
         setToBeCreated(true);
+        
+        if (!isValidNumber) return setError('Add a valid phone number for RSVP');
+        if(!date) return setError('Choose a valid date');
+        if(!time) return setError('Choose a valid time');
+        if(!address) return setError('Choose a valid address');
+        if(!event) return setError('Name your event');
     }
 
     const handleCreate = () => {
@@ -194,24 +222,24 @@ const Home = () => {
         <SocketIo/>
         <form className="w-full max-w-sm">
             <div id="name_div" className="form_div">
-                <input required type="text" onChange={(e)=>setName(e.target.value)} placeholder="Host"/>
+                <input required type="text" value={name ? name : ''} onChange={(e)=>setName(e.target.value)} placeholder="Host"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.host)}>?</button>
             </div>
 
             <div id="event_div" className="form_div">
-                <input required type="text" className='flex-1' onChange={(e)=>setEvent(e.target.value)} placeholder="Event Name"/>
+                <input required type="text" value={event ? event : ''} className='flex-1' onChange={(e)=>setEvent(e.target.value)} placeholder="Event Name"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.event_name)}>?</button>
             </div>
 
             <div className="grid grid-cols-2 text-md container">
                 {/* Date */}
                 <div id="date_div" className="form_div mr-1 appearance-none">
-                    <input required type="date" onChange={(e)=>setDate(e.target.value)} placeholder="Date"/>
+                    <input required value={date ? date : ''} type="date" onChange={(e)=>setDate(e.target.value)} placeholder="Date"/>
                 </div>
 
                 {/* Time */}
                 <div id="time_div" className="form_div ml-1">
-                    <input required type="time" ref={timeInputRef} onChange={(e)=>{setTime(e.target.value)}} pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" placeholder="Time"/>
+                    <input required type="time" value={time ? time : ''} ref={timeInputRef} onChange={(e)=>{setTime(e.target.value)}} pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" placeholder="Time"/>
                 </div>
             </div>
 
@@ -220,16 +248,17 @@ const Home = () => {
                     <GeoapifyGeocoderAutocomplete placeholder="Address"
                         type={'amenity'}
                         limit={5}
+                        value={address ? address : ''}
                         />
                 </GeoapifyContext>
             </div>
 
             <div id="rsvp_phone_div" className={`form_div` + (isValidNumber ? ' border-b-success' : ' border-b-error')}>
-                <input required type="text" min={10} onChange={(e)=>{setRsvpPhone(e.target.value); validatePhoneNumber(e.target.value)}} placeholder="RSVP #"/>
+                <input required value={rsvpPhone ? rsvpPhone : ''} type="text" min={10} onChange={(e)=>{setRsvpPhone(e.target.value); validatePhoneNumber(e.target.value)}} placeholder="RSVP #"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.rsvp_phone)}>?</button>
             </div>
             <div id="available_spots_div" className="form_div">
-                <input type="text" maxLength={4} onChange={(e)=>setAvailableSpots(e.target.value)} placeholder="Max. guests"/>
+                <input type="text" value={ availableSpots ? availableSpots : ''} maxLength={4} onChange={(e)=>setAvailableSpots(e.target.value)} placeholder="Max. guests"/>
                 <button className='opacity-75' onClick={(e)=>handleQuestionClick(e, answers.spots_available)}>?</button>
             </div>
 

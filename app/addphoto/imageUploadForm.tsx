@@ -1,10 +1,11 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import axios from 'axios';
 import {useInviteContext} from '../hooks/useInviteContext'
+import MyModal from '../MyModal';
 
 interface Props {
   serverProps: string[]
@@ -30,7 +31,6 @@ const ImageUploadForm = ({serverProps}:Props) => {
       const { data } = await axios.post("/api/image", formData);
       
       setPhoto('/images/' + `${data.filename}`)
-      console.log(photo)
       
     } catch(error: any) {
       console.log(error.response?.data);
@@ -40,6 +40,16 @@ const ImageUploadForm = ({serverProps}:Props) => {
   
   return (
     <div className='p-9 flex flex-col text-xl'>
+
+      {photo && <MyModal onClose={()=>setPhoto(null)}>
+          <Image src={photo} alt="image selected" width={500} height={500}/>
+          <p>You have selected this image ^^</p>
+          <section className='flex items-center justify-between'>
+            <button onClick={()=>setPhoto(null)} className='text-center rounded text-whitesmoke text-2xl'>Change</button>
+            <Link className='text-whitesmoke my-5' href={'/'}>Okay</Link>
+          </section>
+          
+        </MyModal>}
       
       <Link className='text-whitesmoke decoration-1 border-b-whitesmoke border-b-2 opacity-75 border-opacity-50 mb-5' href={'/'}>Back</Link>
       
@@ -70,13 +80,6 @@ const ImageUploadForm = ({serverProps}:Props) => {
         className='text-center rounded text-whitesmoke text-2xl'>
         {uploading ? "Uploading..." : "Upload"}
       </button>
-      {/* <div className='mt-20 flex flex-col space-y-3'>
-        {serverProps && serverProps.map((item) => (
-          <Link key={item} href={"/images/" + item}>
-            {item}
-          </Link>
-        ))}
-      </div> */}
     </div>
   )
 }
