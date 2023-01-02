@@ -43,17 +43,18 @@ const MyModal = ({onClose, children}:ChildProps) => {
         flex justify-center items-center bg-fixed transition-opacity duration-300 ease-in-out text-whitesmoke text-center`}
         id='wrapper'
         onClick={handleWrapperClose}>
-        <div 
-            className="w-10/12 flex flex-col">
-            <button
-                className='text-whitesmoke text-xl place-self-end'
-                onClick={handleClose}>
-                X
-            </button>
-            <div className={`bg-white p-2 rounded`}>
-                {children}
+            <div className="flex flex-col modal fade fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto p-10">
+              <div className="modal-header flex flex-shrink-0 items-end justify-end p-4 border-b border-gray-200 rounded-t-md">
+                <button
+                    className='text-whitesmoke text-xl'
+                    onClick={handleClose}>
+                    X
+                </button>
+              </div>
+                <>
+                    {children}
+                </>
             </div>
-        </div>
     </div>
   )
 }

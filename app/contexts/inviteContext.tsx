@@ -67,17 +67,17 @@ export default function InviteProvider({ children }: Props) {
         myTheme
     }
 
-    useEffect(()=>{
-      const mySavedName = sessionStorage.getItem("savedName");
-      if(!mySavedName && name){
-          sessionStorage.setItem("mySavedName", name);
-          console.log('NAME SAVED')
-      }
-      if(mySavedName){
-        setName(JSON.parse(mySavedName))
-        console.log(mySavedName)
-      }
-    }, [name])
+    // useEffect(()=>{
+    //   const mySavedName = sessionStorage.getItem("savedName");
+    //   if(!mySavedName && name){
+    //       sessionStorage.setItem("mySavedName", name);
+    //       console.log('NAME SAVED')
+    //   }
+    //   if(mySavedName){
+    //     setName(JSON.parse(mySavedName))
+    //     console.log(mySavedName)
+    //   }
+    // }, [name])
     
   return (
     <InviteCtx.Provider value={{

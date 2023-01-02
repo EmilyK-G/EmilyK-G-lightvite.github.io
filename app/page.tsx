@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState, useRef, LegacyRef, useEffect} from 'react';
+import React, {useState, useRef, LegacyRef} from 'react';
 import MyModal from './MyModal';
 import Link from 'next/link';
 
@@ -50,30 +50,6 @@ const Home = () => {
         details,
         date
     } = useInviteContext()
-
-    // useEffect(()=>{
-    //     const myDetails = sessionStorage.getItem("myInviteDetails");
-    //     if(!myDetails){
-    //         sessionStorage.setItem("myInviteDetails", inviteDetails);
-    //         console.log('SAVED')
-    //     }
-    //     const handleDetails = async()=>{
-    //         if (myDetails){
-    //             // setName(myDetails.name);
-    //             // setPrefix(myDetails.prefix);
-    //             // setEvent(myDetails.event);
-    //             // setDate(myDetails.date);
-    //             // setTime(myDetails.time);
-    //             // setAddress(myDetails.address);
-    //             // setRsvpPhone(myDetails.rsvpPhone);
-    //             // setAvailableSpots(myDetails.availableSpots);
-    //             // setDetails(myDetails.details);
-    //             // setPhoto(myDetails.photo);
-    //             // setMyTheme(myDetails.myTheme);
-    //         }
-    //     }
-    //     if (name||prefix||event||date||time||address) handleDetails()
-    // }, [])
 
     // for the event name, I deleted the pefix selection part because the plan is to separate it with a gramarly-like code, nothing crazy, less mental work for the user.
     const answers = {
@@ -191,24 +167,30 @@ const Home = () => {
   return (
     <div className='text-whitesmoke p-5'>
         {toBeCreated && <MyModal onClose={()=>setToBeCreated(null)}>
-            <>
-            <p>Review your invite...</p>
-            <ul>
-                <li className="m-5"><span>You are invited to </span>{inviteDetails.prefix} {inviteDetails.event}</li>
-                <li className="m-5">Hosted by: {inviteDetails.name}</li>
-                <li className="m-5">Event Date: {inviteDetails.date}</li>
-                <li className="m-5">Event time: {inviteDetails.time}</li>
-                <li className="m-5">Event Location: {inviteDetails.address}</li>
-                <li className="m-5">RSVP to: {inviteDetails.rsvpPhone}</li>
-                <li className="m-5">Spots available: {inviteDetails.availableSpots}</li>
-                {details && <li className="m-5">Details: {inviteDetails.details}</li>}
-                {photo && <li className="m-5">Picture: {inviteDetails.photo}</li>}
-                {myTheme && <li className="m-5">Style: {inviteDetails.myTheme}</li>}
-                {/* For testing purposes ONLY */}
-                {socketIndex && <li className="m-5">Socket room: {inviteDetails.socketIndex}</li>}
-            </ul>
-            <button className='myBtn m-10' onClick={handleCreate}>Create</button>
-            </>
+            <div className="modal-dialog modal-dialog-scrollable relative w-auto pointer-events-none">
+                <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                    <div className="modal-body relative p-4">
+                        <p>Review your invite...</p>
+                        <ul>
+                            <li className="m-5 overflow-scroll"><span>You are invited to </span>{inviteDetails.prefix} {inviteDetails.event}</li>
+                            <li className="m-5 overflow-scroll">Hosted by: <br/> {inviteDetails.name}</li>
+                            <li className="m-5 overflow-scroll">Event Date: <br/> {inviteDetails.date}</li>
+                            <li className="m-5">Event time: <br/> {inviteDetails.time}</li>
+                            <li className="m-5 overflow-scroll">Event Location: <br/> {inviteDetails.address}</li>
+                            <li className="m-5 overflow-scroll">RSVP to: <br/> {inviteDetails.rsvpPhone}</li>
+                            <li className="m-5 overflow-scroll">Spots available: <br/> {inviteDetails.availableSpots}</li>
+                            {details && <li className="m-5 overflow-scroll">Details: <br/> {inviteDetails.details}</li>}
+                            {photo && <li className="m-5 overflow-scroll">Picture: <br/> {inviteDetails.photo}</li>}
+                            {myTheme && <li className="m-5 overflow-scroll">Style: <br/> {inviteDetails.myTheme}</li>}
+                            {/* For testing purposes ONLY */}
+                            {socketIndex && <li className="m-5 overflow-scroll">Socket room: <br/> {inviteDetails.socketIndex}</li>}
+                        </ul>
+                    </div>
+                    <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-center p-4 border-t border-gray-200 rounded-b-md">
+                        <button className='myBtn' onClick={handleCreate}>Create</button>
+                    </div>
+                </div>
+            </div>
         </MyModal>}
 
         { question && <MyModal onClose={()=>{setQuestion(null);setAnswer(null)}}>
