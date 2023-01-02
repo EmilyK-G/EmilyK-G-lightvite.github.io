@@ -2,7 +2,7 @@
 
 User stories:
 As a busy person, I want to send a quick invite to any event I host without worry about the details and design aspect of it.
-As a host, I want a quick and easy RSVP method for my guests, so they can actually send them on time.
+As a host, I want a quick and easy RSVP method for my guests, so they can actually confirm on time.
 
 Find an example of this invite with functional RSVP method at lightvite.com.
 
