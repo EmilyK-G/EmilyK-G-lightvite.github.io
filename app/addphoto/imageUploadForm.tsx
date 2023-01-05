@@ -15,10 +15,12 @@ const ImageUploadForm = ({serverProps}:Props) => {
   const [uploading, setUploading] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedFile, setSelectedFile] = useState<File>();
+  const [error, setError] = useState<null|string>(null)
 
   const {setPhoto, photo} = useInviteContext();
 
   const handleUpload = async() => {
+    setError(null);
     setUploading(true);
     console.log(serverProps)
     try {
@@ -33,7 +35,7 @@ const ImageUploadForm = ({serverProps}:Props) => {
       setPhoto('/images/' + `${data.filename}`)
       
     } catch(error: any) {
-      console.log(error.response?.data);
+      setError(error.response?.data);
     }
     setUploading(false);
   }
@@ -67,12 +69,12 @@ const ImageUploadForm = ({serverProps}:Props) => {
           }}/>
         <div className='mt-1 mb-5 w-full h-96 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer border-whitesmoke border-opacity-60'>
           {selectedImage 
-            ? <><Image src={selectedImage} alt="image selected" width={500} height={500}/>
+            ? <><Image src={selectedImage} alt="image selected" width={500} height={500} className=''/>
                 <span className='z-10 absolute bg-whitesmoke bg-opacity-40'>Click to change image</span></>
             : <span>Select Image</span>}
         </div>
       </label>
-
+      {error && <p className='text-error'></p>}
       <button
         disabled={uploading}
         onClick={handleUpload}
