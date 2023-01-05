@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import ImageUploadForm from './imageUploadForm';
 
-export const dynamic = 'force-dynamic';
+// export const dynamic = 'force-dynamic';
 
 const PhotoPage = async() => {
 

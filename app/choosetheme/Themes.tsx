@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useInviteContext } from '../hooks/useInviteContext';
 import MyModal from '../MyModal';
@@ -33,15 +33,17 @@ const Themes = ({item}:Props) => {
                 src={`/images/`+ item} 
                 alt='image'
                 fill={true}
-                className='object-cover z-10 opacity-50 absolute'/>
+                className='object-cover z-10 absolute opacity-90'/>
                 <div className="flex items-end justify-end self-end h-7 w-full bg-whitesmoke bg-opacity-5 relative z-10 hover:bg-opacity-0 ">
                     <p className='z-20'>{item}</p>
                 </div>
         </div>
         {myTheme && <MyModal onClose={()=>setMyTheme(null)}>
             <p>You choose the {item} theme</p>
-            <Link className='text-whitesmoke my-5 pl-5' href={'/'}>Okay</Link>
-            <button onClick={()=>setMyTheme(null)} className='text-whitesmoke my-5 pl-5'>Change</button>
+            <section className='flex items-center justify-between'>
+              <Link className='text-whitesmoke my-5 pl-5' href={'/'}>Okay</Link>
+              <button onClick={()=>setMyTheme(null)} className='text-whitesmoke my-5 pl-5'>Change</button>
+            </section>
         </MyModal>}
     </>
     
