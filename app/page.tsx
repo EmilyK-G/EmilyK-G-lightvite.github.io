@@ -9,8 +9,14 @@ import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 import SocketIo from './SocketIo';
 import Details from './DetailsPage';
 import { useInviteContext } from './hooks/useInviteContext';
+import AblyWs from './AblyWs';
+// import dynamic from 'next/dynamic';
+
+
+// const AblyWs = dynamic(() => import('./AblyWs'), { ssr: false });
 
 const Home = () => {
+
     const [photoClick, setPhotoClick] = useState<boolean | null>(null);
     const [detailsClick, setDetailsClick] = useState<boolean | null>(null);
     const [myThemeClick, setMyThemeClick] = useState<boolean | null>(null);
@@ -151,13 +157,16 @@ const Home = () => {
         handleTime();
         handleAddress();
         handleEventName();
-        setToBeCreated(true);
         
         if (!isValidNumber) return setError('Add a valid phone number for RSVP');
         if(!date) return setError('Choose a valid date');
         if(!time) return setError('Choose a valid time');
         if(!address) return setError('Choose a valid address');
         if(!event) return setError('Name your event');
+
+        if(error) return
+
+        setToBeCreated(true);
     }
 
     const handleCreate = () => {
@@ -201,7 +210,7 @@ const Home = () => {
             </>
         </MyModal>
         }
-        <SocketIo/>
+        <AblyWs/>
         <form className="w-full max-w-sm">
             <div id="name_div" className="form_div">
                 <input required type="text" value={name ? name : ''} onChange={(e)=>setName(e.target.value)} placeholder="Host"/>
