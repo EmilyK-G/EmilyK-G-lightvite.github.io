@@ -1,37 +1,91 @@
-# Hi, this is Lightvite.
+Lightvite
 
-User stories:
-As a busy person, I want to send a quick invite to any event I host without worry about the details and design aspect of it.
-As a host, I want a quick and easy RSVP method for my guests, so they can actually confirm on time.
+Lightvite is a personal web development project designed to make creating and sharing online event invitations simple, convenient, and visually appealing.
 
-Find an example of this invite with functional RSVP method at lightvite.com.
+The idea behind Lightvite is to provide a straightforward alternative to traditional invitation platforms, allowing people to focus on their events rather than spending unnecessary time designing invitations or creating accounts.
 
-Many repos here were made flawlessly using the MERN stack. Originally, Lightvite was ment to be a MERN project as well. But The goal is to give every person the chance to make their own lightvite and confirm RSVP without the struggle of creating an account or signing up. For that reason, I began to question the need of a database at this time and Lightvite is not to be considered as a MERN stack project.
+Project Overview
 
-## Next.js + Tailwind CSS Example
+Lightvite is an invitation creation application that is part of a larger project alongside BettaInvite, an application intended to display personalized invitation websites.
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.2)](https://tailwindcss.com/blog/tailwindcss-v3-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+The goal is to allow users to enter their event information, choose a design, and generate a personalized webpage that can be shared with guests.
 
-## Deploy your own
+Intended User Experience
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+1. Users enter their event details, such as the event name, host, date, time, and other relevant information.
+2. Users choose an invitation theme and customize their design.
+3. Lightvite sends the information to BettaInvite.
+4. BettaInvite generates a personalized invitation webpage.
+5. Guests can access the invitation and respond through an RSVP system.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+The integration between Lightvite and BettaInvite is still being reviewed and developed.
 
-## How to use
+User Stories
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+The project was originally inspired by two user stories:
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-```
+As a busy person, I want to send invitations to events I host without worrying about the details and design of each invitation.
 
-```bash
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
+As an event host, I want a quick and easy RSVP method for my guests so they can confirm their attendance on time.
 
-```bash
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
-```
+These ideas continue to guide the project’s development.
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Technologies
+
+* React.js
+* Next.js
+* JavaScript
+* TypeScript
+* Tailwind CSS
+* Git and GitHub
+
+Design and Development Decisions
+
+Lightvite was originally envisioned as a project using the MERN stack (MongoDB, Express.js, React.js, and Node.js).
+
+However, during development, I reconsidered whether the application needed a database and the additional complexity associated with a traditional full-stack architecture.
+
+One of the main goals was to allow users to create invitations and manage RSVPs without requiring them to register or sign in.
+
+Because of this, I began exploring a simpler architecture focused on accessibility, convenience, and ease of use.
+
+The application’s data storage and RSVP implementation are areas to be reviewed as development continues.
+
+Development Status
+
+Work in Progress
+
+Lightvite was independently developed as a personal project. After a period of inactivity, I am revisiting the application to improve its functionality, refine the user experience, and continue working toward its original vision.
+
+Planned Improvements
+
+* Complete or refine the integration between Lightvite and BettaInvite.
+* Automate the generation of personalized invitation webpages.
+* Improve the user interface and responsive design.
+* Expand invitation themes and customization options.
+* Improve form validation and event information handling.
+* Review and refine RSVP functionality.
+* Test existing features and fix bugs.
+* Evaluate appropriate methods for storing and managing event information.
+
+Project Goals
+
+The long-term goal is to create an intuitive invitation platform that combines simplicity, attractive design, and practical functionality.
+
+Lightvite is intended to make creating invitations easy for event hosts while providing guests with a convenient way to view event information and respond.
+
+Live Demo
+
+View Lightvite on Vercel
+
+The application is still under development, and some features may not be fully functional.
+
+Related Project
+
+BettaInvite — The companion application intended to generate and display personalized invitation webpages.
+
+View BettaInvite on GitHub
+
+Author
+
+Developed independently by EmilyK-G as a personal web development project.
